@@ -24,7 +24,7 @@ if ($db_url) {
     // Parsing the Postgres URL
     $dbopts = parse_url($db_url);
     $host = $dbopts["host"];
-    $port = $dbopts["port"];
+    $port = isset($dbopts["port"]) ? $dbopts["port"] : "5432";
     $user = $dbopts["user"];
     $pass = $dbopts["pass"];
     $db_name = ltrim($dbopts["path"], '/');
