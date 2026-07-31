@@ -1,7 +1,8 @@
 FROM php:8.2-apache
 
-# Install PDO MySQL extension
-RUN docker-php-ext-install pdo pdo_mysql
+# Install PDO MySQL and PGSQL extensions
+RUN apt-get update && apt-get install -y libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
