@@ -42,7 +42,11 @@ if ($db_url) {
 try {
     $conn = new PDO($dsn, $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn->exec("set names utf8");
+
+    // For MySQL, set names. Postgres usually handles this via DSN or it's default.
+    if (strpos($dsn, 'mysql') !== false) {
+        $conn->exec("set names utf8");
+    }
 } catch(PDOException $exception) {
     http_response_code(500);
     echo json_encode(["error" => "Connection error: " . $exception->getMessage()]);
