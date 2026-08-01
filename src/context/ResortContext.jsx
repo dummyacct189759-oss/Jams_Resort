@@ -33,6 +33,15 @@ export const ResortProvider = ({ children }) => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('jams_user')) || null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const logActivity = async (action, details) => {
     if (!user) return;
@@ -451,6 +460,7 @@ export const ResortProvider = ({ children }) => {
       stats,
       loading,
       user,
+      isMobile,
       login,
       logout,
       refreshData: fetchData

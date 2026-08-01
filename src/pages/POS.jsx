@@ -17,7 +17,8 @@ import {
   Smartphone,
   Info,
   Mic2,
-  Home
+  Home,
+  ShoppingCart
 } from 'lucide-react';
 import { useResort } from '@/context/ResortContext';
 import { Card, CardContent } from '@/components/ui/card';
@@ -29,6 +30,7 @@ import { cn } from '@/lib/utils';
 const POS = () => {
   const resortData = useResort();
   const [searchParams] = useSearchParams();
+  const { isMobile } = resortData;
   const villas = resortData?.villas || [];
   const services = resortData?.services || [];
   const guests = resortData?.guests || [];
@@ -41,6 +43,7 @@ const POS = () => {
   const [selectedVilla, setSelectedVilla] = useState(null);
   const [selectedGuest, setSelectedGuest] = useState(null);
   const [billItems, setBillItems] = useState([]);
+  const [showBill, setShowBill] = useState(false);
   const [checkIn, setCheckIn] = useState(new Date().toISOString().split('T')[0]);
   const [checkOut, setCheckOut] = useState(new Date(Date.now() + 86400000).toISOString().split('T')[0]);
   const [paymentMethod, setPaymentMethod] = useState('Cash');
@@ -190,11 +193,14 @@ const POS = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-140px)] gap-8 overflow-hidden">
+    <div className="flex flex-col lg:flex-row h-full lg:h-[calc(100vh-140px)] gap-6 lg:gap-8 overflow-hidden relative">
       {/* Left Panel: Villa Selection */}
-      <div className="flex-1 flex flex-col gap-6 overflow-hidden">
-        <div className="flex items-center justify-between">
-          <div className="relative w-96">
+      <div className={cn(
+          "flex-1 flex flex-col gap-6 overflow-hidden",
+          isMobile && showBill ? "hidden" : "flex"
+      )}>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="relative w-full md:w-96">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
               type="text"
@@ -205,12 +211,12 @@ const POS = () => {
             />
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
             {['All', 'Available', 'Occupied', 'Cleaning', 'Reserved'].map(status => (
               <Button
                 key={status}
                 variant={filterStatus === status ? "default" : "outline"}
-                className="rounded-full px-6 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                className="rounded-full px-6 shrink-0 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                 onClick={() => setFilterStatus(status)}
               >
                 {status}
@@ -219,7 +225,7 @@ const POS = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 overflow-y-auto pr-2 pb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 overflow-y-auto pr-2 pb-24 lg:pb-6">
           <AnimatePresence mode='wait'>
             {filteredVillas.map((villa) => (
               <motion.div
@@ -355,9 +361,20 @@ const POS = () => {
       </div>
 
       {/* Right Panel: Active Bill */}
-      <div className="w-[450px] flex flex-col gap-6 bg-white dark:bg-slate-900 rounded-3xl border dark:border-slate-800 shadow-xl overflow-hidden p-6 transition-colors">
+      <div className={cn(
+          "w-full lg:w-[450px] flex flex-col gap-6 bg-white dark:bg-slate-900 rounded-3xl border dark:border-slate-800 shadow-xl overflow-hidden p-6 transition-colors",
+          isMobile && !showBill ? "hidden" : "flex",
+          isMobile && "fixed inset-0 z-50 rounded-none h-full"
+      )}>
         <div className="flex items-center justify-between border-b dark:border-slate-800 pb-4">
-          <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Active Bill</h2>
+          <div className="flex items-center gap-2">
+              {isMobile && (
+                  <Button variant="ghost" size="icon" onClick={() => setShowBill(false)}>
+                      <X className="w-6 h-6" />
+                  </Button>
+              )}
+              <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Active Bill</h2>
+          </div>
           <Button variant="ghost" size="icon" onClick={() => {
             setSelectedVilla(null);
             setBillItems([]);
@@ -577,6 +594,28 @@ const POS = () => {
           </div>
         </div>
       </div>
+
+      {isMobile && !showBill && (
+          <div className="fixed bottom-6 left-6 right-6 z-40">
+              <Button
+                  className="w-full h-14 rounded-2xl shadow-2xl flex justify-between px-6 bg-primary"
+                  onClick={() => setShowBill(true)}
+              >
+                  <div className="flex items-center gap-3">
+                      <div className="relative">
+                          <ShoppingCart className="w-6 h-6" />
+                          {(billItems.length > 0 || selectedVilla) && (
+                              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[8px] flex items-center justify-center border-2 border-primary">
+                                  {(billItems.length + (selectedVilla ? 1 : 0))}
+                              </span>
+                          )}
+                      </div>
+                      <span className="font-bold">View Active Bill</span>
+                  </div>
+                  <span className="font-black">₱{total.toLocaleString()}</span>
+              </Button>
+          </div>
+      )}
     </div>
   );
 };

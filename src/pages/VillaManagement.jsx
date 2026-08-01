@@ -135,13 +135,13 @@ const VillaManagement = () => {
   };
 
   return (
-    <div className="space-y-8 relative">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 md:space-y-8 relative pb-20 md:pb-0">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Villa Management</h1>
-          <p className="text-slate-500 dark:text-slate-400">Configure and monitor all resort villas.</p>
+          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">Villa Management</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base">Configure and monitor all resort villas.</p>
         </div>
-        <Button onClick={openAddModal} className="gap-2 rounded-xl h-12 px-6 shadow-lg shadow-primary/20">
+        <Button onClick={openAddModal} className="gap-2 rounded-xl h-12 px-6 shadow-lg shadow-primary/20 w-full md:w-auto">
           <Plus className="w-5 h-5" />
           Add New Villa
         </Button>
@@ -159,9 +159,9 @@ const VillaManagement = () => {
               <h3 className="text-lg font-bold">{editingVilla ? 'Edit Villa Details' : 'Add New Villa'}</h3>
               <button onClick={() => setShowModal(false)}><X className="w-6 h-6" /></button>
             </div>
-            <form onSubmit={handleSubmit} className="p-8 space-y-4 max-h-[70vh] overflow-y-auto text-slate-900 dark:text-slate-100">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="col-span-2 space-y-1">
+            <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-4 max-h-[80vh] overflow-y-auto text-slate-900 dark:text-slate-100">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="md:col-span-2 space-y-1">
                     <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Image</label>
                     <div className="flex items-center gap-4 mt-1">
                         <div className="w-24 h-24 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden relative group">
@@ -343,9 +343,9 @@ const VillaManagement = () => {
         </div>
       )}
 
-      <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl border dark:border-slate-800 shadow-sm transition-colors">
-        <div className="flex items-center gap-4 flex-1">
-          <div className="relative w-80">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl border dark:border-slate-800 shadow-sm transition-colors gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 flex-1">
+          <div className="relative flex-1 sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
@@ -355,8 +355,8 @@ const VillaManagement = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="h-6 w-[1px] bg-slate-200 dark:bg-slate-700 mx-2"></div>
-          <div className="flex items-center gap-2">
+          <div className="hidden sm:block h-6 w-[1px] bg-slate-200 dark:bg-slate-700 mx-2"></div>
+          <div className="flex items-center gap-2 justify-center">
             <Button
               variant={view === 'grid' ? 'default' : 'ghost'}
               size="icon"
@@ -376,9 +376,9 @@ const VillaManagement = () => {
           </div>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <select
-            className="bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border-none rounded-xl px-4 py-2 text-sm font-medium outline-none"
+            className="flex-1 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border-none rounded-xl px-4 py-2 text-sm font-medium outline-none"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
@@ -388,7 +388,7 @@ const VillaManagement = () => {
             <option>Cleaning</option>
             <option>Maintenance</option>
           </select>
-          <select className="bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border-none rounded-xl px-4 py-2 text-sm font-medium outline-none">
+          <select className="flex-1 bg-slate-50 dark:bg-slate-800 dark:text-slate-200 border-none rounded-xl px-4 py-2 text-sm font-medium outline-none">
             <option>Sort by Price: Low to High</option>
             <option>Sort by Price: High to Low</option>
             <option>Sort by Capacity</option>

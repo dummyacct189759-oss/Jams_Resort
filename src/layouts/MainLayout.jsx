@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import Sidebar from '@/components/shared/Sidebar';
-import { Bell, Search, User, Clock, AlertTriangle, CheckCircle, Info } from 'lucide-react';
+import { Bell, Search, User, Clock, AlertTriangle, CheckCircle, Info, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useResort } from '@/context/ResortContext';
 import {
@@ -14,7 +14,8 @@ import { formatDistanceToNow } from 'date-fns';
 
 const MainLayout = () => {
   const location = useLocation();
-  const { user, maintenanceRequests, villas } = useResort();
+  const { user, maintenanceRequests, villas, isMobile } = useResort();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const notifications = [
     ...(maintenanceRequests || [])
@@ -45,21 +46,36 @@ const MainLayout = () => {
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden transition-colors duration-300">
-      <Sidebar />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden w-full">
         {/* Header */}
-        <header className="h-20 bg-white dark:bg-slate-900 border-b dark:border-slate-800 flex items-center justify-between px-8 shrink-0 transition-colors duration-300">
-          <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-full w-96 border dark:border-slate-700 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-            <Search className="w-5 h-5 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search anything..."
-              className="bg-transparent border-none outline-none w-full text-sm dark:text-slate-200"
-            />
+        <header className="h-20 bg-white dark:bg-slate-900 border-b dark:border-slate-800 flex items-center justify-between px-4 md:px-8 shrink-0 transition-colors duration-300">
+          <div className="flex items-center gap-4">
+            {isMobile && (
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            )}
+            {!isMobile && (
+              <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2 rounded-full w-96 border dark:border-slate-700 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                <Search className="w-5 h-5 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Search anything..."
+                  className="bg-transparent border-none outline-none w-full text-sm dark:text-slate-200"
+                />
+              </div>
+            )}
+            {isMobile && (
+              <span className="text-lg font-bold text-primary dark:text-emerald-500 truncate">JAMS</span>
+            )}
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 md:gap-6">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="relative p-2 text-slate-400 hover:text-primary transition-colors outline-none">
@@ -114,11 +130,13 @@ const MainLayout = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <div className="flex items-center gap-3 border-l dark:border-slate-800 pl-6">
-              <div className="text-right">
-                <p className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-none">{user?.name || 'Guest'}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{user?.role || 'User'}</p>
-              </div>
+            <div className="flex items-center gap-3 border-l dark:border-slate-800 pl-4 md:pl-6">
+              {!isMobile && (
+                <div className="text-right">
+                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-none">{user?.name || 'Guest'}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{user?.role || 'User'}</p>
+                </div>
+              )}
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                 <User className="w-6 h-6" />
               </div>
@@ -127,7 +145,7 @@ const MainLayout = () => {
         </header>
 
         {/* Content Area with Transitions */}
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}

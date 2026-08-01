@@ -35,8 +35,8 @@ const navItems = [
   { name: 'Settings', path: '/settings', icon: Settings },
 ];
 
-const Sidebar = () => {
-  const { logout, user } = useResort();
+const Sidebar = ({ isOpen, onClose }) => {
+  const { logout, user, isMobile } = useResort();
 
   const filteredNavItems = navItems.filter(item => {
     if (user?.role === 'Cashier') {
@@ -46,13 +46,23 @@ const Sidebar = () => {
     return true;
   });
 
-  return (
-    <aside className="w-64 bg-white dark:bg-slate-900 h-screen flex flex-col border-r dark:border-slate-800 shadow-sm transition-colors duration-300">
-      <div className="p-6 flex items-center gap-3">
-        <div className="bg-primary p-2 rounded-lg">
-          <Hotel className="text-white w-6 h-6" />
+  const sidebarContent = (
+    <div className={cn(
+      "bg-white dark:bg-slate-900 h-screen flex flex-col border-r dark:border-slate-800 shadow-sm transition-colors duration-300",
+      isMobile ? "w-72" : "w-64"
+    )}>
+      <div className="p-6 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="bg-primary p-2 rounded-lg">
+            <Hotel className="text-white w-6 h-6" />
+          </div>
+          <span className="text-xl font-bold text-primary tracking-tight dark:text-emerald-500">JAMS RESORT</span>
         </div>
-        <span className="text-xl font-bold text-primary tracking-tight dark:text-emerald-500">JAMS RESORT</span>
+        {isMobile && (
+           <button onClick={onClose} className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg">
+              <LogOut className="w-5 h-5 rotate-180" />
+           </button>
+        )}
       </div>
 
       <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
@@ -60,6 +70,7 @@ const Sidebar = () => {
           <NavLink
             key={item.path}
             to={item.path}
+            onClick={() => isMobile && onClose()}
             className={({ isActive }) =>
               cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group",
@@ -84,6 +95,31 @@ const Sidebar = () => {
           <span className="font-medium">Logout</span>
         </button>
       </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <>
+        {isOpen && (
+          <div
+            className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm transition-opacity"
+            onClick={onClose}
+          />
+        )}
+        <div className={cn(
+          "fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        )}>
+          {sidebarContent}
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <aside className="w-64 h-screen shrink-0 sticky top-0">
+      {sidebarContent}
     </aside>
   );
 };
