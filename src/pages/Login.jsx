@@ -50,7 +50,7 @@ const Login = () => {
             <div className="inline-flex bg-white/10 p-4 rounded-2xl backdrop-blur-sm mb-4">
               <Hotel className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-2xl font-black text-white tracking-tight uppercase">JAMS Luxury Resort</h1>
+            <h1 className="text-2xl font-black text-white tracking-tight uppercase">JAMS Resort</h1>
             <p className="text-primary-foreground/70 text-sm mt-1">Management Portal</p>
           </div>
 

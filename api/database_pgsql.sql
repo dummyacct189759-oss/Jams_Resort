@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS maintenance (
 
 CREATE TABLE IF NOT EXISTS settings (
     id INT PRIMARY KEY DEFAULT 1,
-    resort_name VARCHAR(255) DEFAULT 'JAMS Luxury Resort & Spa',
+    resort_name VARCHAR(255) DEFAULT 'JAMS Resort & Spa',
     contact_number VARCHAR(50) DEFAULT '+63 912 345 6789',
     address TEXT DEFAULT 'Brgy. Monbon Irosin',
     service_charge DECIMAL(5, 2) DEFAULT 5.00,
@@ -119,26 +119,10 @@ CREATE TABLE IF NOT EXISTS settings (
 
 -- Insert Initial Settings
 INSERT INTO settings (id, resort_name, contact_number, address, service_charge)
-VALUES (1, 'JAMS Luxury Resort & Spa', '+63 912 345 6789', 'Brgy. Monbon Irosin', 5.00)
+VALUES (1, 'JAMS Resort & Spa', '+63 912 345 6789', 'Brgy. Monbon Irosin', 5.00)
 ON CONFLICT (id) DO NOTHING;
 
--- Insert Sample Data
-INSERT INTO villas (name, price, capacity, amenities, status, image) VALUES
-('Royal Suite Villa 01', 15000, '4-6 Persons', 'Private Pool, WiFi, Kitchen', 'Available', 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=400'),
-('Royal Suite Villa 02', 15000, '4-6 Persons', 'Private Pool, WiFi, Kitchen', 'Occupied', 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&q=80&w=400'),
-('Garden View Villa 05', 8500, '2-4 Persons', 'Garden, WiFi, Bathtub', 'Available', 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=400'),
-('Ocean View Villa 08', 12000, '2-4 Persons', 'Ocean View, WiFi, Balcony', 'Cleaning', 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=400');
-
-INSERT INTO services (name, price, icon, category) VALUES
-('Extra Mattress', 500, 'Bed', 'Rental'),
-('Cottage Rental', 1500, 'Umbrella', 'Rental'),
-('Videoke Machine', 1000, 'Mic2', 'Entertainment'),
-('Swimming Pool Pass', 300, 'Droplets', 'Facility');
-
-INSERT INTO guests (name, contact, email, address, status, total_visits, total_spent) VALUES
-('Juan Dela Cruz', '0912-345-6789', 'juan.dc@email.com', 'Quezon City', 'Regular', 5, 145000),
-('Maria Santos', '0922-555-0123', 'maria.s@email.com', 'Cebu City', 'New', 2, 28500);
-
+-- Insert Default Admin User
 INSERT INTO users (name, username, password, role) VALUES
-('Admin User', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator'),
-('John Doe', 'john', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Receptionist');
+('Admin User', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Administrator')
+ON CONFLICT (username) DO NOTHING;

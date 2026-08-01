@@ -16,7 +16,7 @@ switch($method) {
         if (!$result) {
             // Provide default if row doesn't exist
             $result = [
-                "resort_name" => "JAMS Luxury Resort & Spa",
+                "resort_name" => "JAMS Resort & Spa",
                 "contact_number" => "+63 912 345 6789",
                 "address" => "Brgy. Monbon Irosin",
                 "service_charge" => 5.00,

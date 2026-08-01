@@ -25,7 +25,7 @@ export const ResortProvider = ({ children }) => {
   const [logs, setLogs] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [settings, setSettings] = useState({
-    resort_name: 'JAMS Luxury Resort & Spa',
+    resort_name: 'JAMS Resort & Spa',
     contact_number: '+63 912 345 6789',
     address: 'Brgy. Monbon Irosin',
     currency: '₱'

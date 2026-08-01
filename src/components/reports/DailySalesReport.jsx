@@ -94,7 +94,7 @@ const DailySalesReport = ({ date = new Date(), transactions = [] }) => {
       </div>
 
       <div className="text-[10px] text-center text-slate-400 border-t border-slate-200 pt-4">
-        This is a computer-generated report. JAMS Luxury Resort & Spa Management System.
+        This is a computer-generated report. JAMS Resort & Spa Management System.
       </div>
     </div>
   );
