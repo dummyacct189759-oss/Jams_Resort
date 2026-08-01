@@ -159,12 +159,12 @@ const VillaManagement = () => {
               <h3 className="text-lg font-bold">{editingVilla ? 'Edit Villa Details' : 'Add New Villa'}</h3>
               <button onClick={() => setShowModal(false)}><X className="w-6 h-6" /></button>
             </div>
-            <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-4 max-h-[80vh] overflow-y-auto text-slate-900 dark:text-slate-100">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="md:col-span-2 space-y-1">
-                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Image</label>
-                    <div className="flex items-center gap-4 mt-1">
-                        <div className="w-24 h-24 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden relative group">
+            <form onSubmit={handleSubmit} className="p-5 md:p-8 space-y-6 max-h-[85vh] overflow-y-auto text-slate-900 dark:text-slate-100">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="md:col-span-2 space-y-2">
+                    <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Image</label>
+                    <div className="flex flex-col sm:flex-row items-center gap-4 mt-1">
+                        <div className="w-full sm:w-24 h-40 sm:h-24 rounded-2xl bg-slate-100 dark:bg-slate-800 border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden relative group">
                             {formData.image ? (
                                 <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
                             ) : (
@@ -180,7 +180,7 @@ const VillaManagement = () => {
                                 onChange={handleImageUpload}
                             />
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1 text-center sm:text-left">
                             <p className="text-xs text-slate-500 mb-2">Upload a high-quality photo of the villa.</p>
                             <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-bold transition-colors">
                                 <Upload className="w-4 h-4" />
@@ -195,18 +195,18 @@ const VillaManagement = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-2 space-y-1">
-                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Name</label>
+                <div className="md:col-span-2 space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Name</label>
                   <input
                     type="text" required
-                    className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none"
+                    className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-primary/20"
                     value={formData.name}
                     onChange={e => setFormData({...formData, name: e.target.value})}
                     placeholder="e.g. Royal Suite 01"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                     Price (₱) {formData.is_flexi && <span className="text-[10px] lowercase font-normal opacity-50">(Optional)</span>}
                   </label>
                   <input
@@ -218,19 +218,19 @@ const VillaManagement = () => {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Capacity</label>
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Capacity</label>
                   <input
                     type="text" required
-                    className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none"
+                    className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-primary/20"
                     value={formData.capacity}
                     onChange={e => setFormData({...formData, capacity: e.target.value})}
                     placeholder="e.g. 4-6 Persons"
                   />
                 </div>
-                <div className="col-span-2 space-y-1">
-                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Category</label>
+                <div className="md:col-span-2 space-y-1">
+                    <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Category</label>
                     <select
-                        className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none"
+                        className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-primary/20"
                         value={formData.category}
                         onChange={e => setFormData({...formData, category: e.target.value})}
                     >
@@ -239,20 +239,20 @@ const VillaManagement = () => {
                         <option value="Executive Suite">Executive Suite</option>
                     </select>
                 </div>
-                <div className="col-span-2 space-y-1">
-                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Amenities (Comma separated)</label>
+                <div className="md:col-span-2 space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Amenities (Comma separated)</label>
                   <input
                     type="text"
-                    className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none"
+                    className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-primary/20"
                     value={formData.amenities}
                     onChange={e => setFormData({...formData, amenities: e.target.value})}
                     placeholder="WiFi, Private Pool, Kitchen"
                   />
                 </div>
-                <div className="col-span-2 space-y-1">
-                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Status</label>
+                <div className="md:col-span-2 space-y-1">
+                    <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Villa Status</label>
                     <select
-                        className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none"
+                        className="w-full p-3 bg-slate-50 dark:bg-slate-800 dark:text-slate-100 border dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-primary/20"
                         value={formData.status}
                         onChange={e => setFormData({...formData, status: e.target.value})}
                     >
@@ -265,7 +265,7 @@ const VillaManagement = () => {
                 </div>
 
                 {/* Flexi Pax Feature */}
-                <div className="col-span-2 pt-4 border-t dark:border-slate-800">
+                <div className="md:col-span-2 pt-4 border-t dark:border-slate-800">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
                             <input
