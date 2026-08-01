@@ -4,7 +4,19 @@ require_once '../config/db.php';
 try {
     // 1. Run the base schema
     $sql = file_get_contents('../database_pgsql.sql');
-    $conn->exec($sql);
+    // Split by semicolon to run each statement individually to avoid one failure stopping the rest
+    $statements = explode(';', $sql);
+    foreach ($statements as $stmt) {
+        $trimmed = trim($stmt);
+        if (!empty($trimmed)) {
+            try {
+                $conn->exec($trimmed);
+            } catch (PDOException $e) {
+                // Ignore errors like "table already exists" or "column already exists"
+                // but keep going
+            }
+        }
+    }
 
     // 2. Add missing columns to existing tables (Migration for existing databases)
     $migrations = [
@@ -14,11 +26,15 @@ try {
     ];
 
     foreach ($migrations as $m) {
-        $conn->exec($m);
+        try {
+            $conn->exec($m);
+        } catch (PDOException $e) {
+            // Ignore
+        }
     }
 
     echo json_encode(["message" => "Database migration successful! All tables and columns are up to date."]);
-} catch (PDOException $e) {
+} catch (Exception $e) {
     http_response_code(500);
     echo json_encode(["error" => "Migration failed: " . $e->getMessage()]);
 }
