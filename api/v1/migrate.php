@@ -1,6 +1,9 @@
 <?php
 require_once '../config/db.php';
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 try {
     // 1. Run the base schema
     $sql = file_get_contents('../database_pgsql.sql');
