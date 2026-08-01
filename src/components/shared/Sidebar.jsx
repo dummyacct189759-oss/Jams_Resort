@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useResort } from '@/context/ResortContext';
+import logo from '../../../images/Logo.jpg';
 
 const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
@@ -53,9 +54,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     )}>
       <div className="p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="bg-primary p-2 rounded-lg">
-            <Hotel className="text-white w-6 h-6" />
-          </div>
+          <img src={logo} alt="JAMS Resort Logo" className="w-10 h-10 rounded-lg object-cover" />
           <span className="text-xl font-bold text-primary tracking-tight dark:text-emerald-500">JAMS RESORT</span>
         </div>
         {isMobile && (

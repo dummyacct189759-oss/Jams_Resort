@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatDistanceToNow } from 'date-fns';
+import logo from '../../images/Logo.jpg';
 
 const MainLayout = () => {
   const location = useLocation();
@@ -71,7 +72,10 @@ const MainLayout = () => {
               </div>
             )}
             {isMobile && (
-              <span className="text-lg font-bold text-primary dark:text-emerald-500 truncate">JAMS</span>
+              <div className="flex items-center gap-2">
+                <img src={logo} alt="Logo" className="w-8 h-8 rounded-lg" />
+                <span className="text-lg font-bold text-primary dark:text-emerald-500 truncate">JAMS</span>
+              </div>
             )}
           </div>
 
