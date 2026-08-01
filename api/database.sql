@@ -6,8 +6,11 @@ CREATE TABLE IF NOT EXISTS villas (
     name VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     capacity VARCHAR(100),
+    category VARCHAR(255) DEFAULT 'Standard Villa',
     amenities TEXT,
     status ENUM('Available', 'Occupied', 'Cleaning', 'Reserved', 'Maintenance') DEFAULT 'Available',
+    is_flexi TINYINT(1) DEFAULT 0,
+    pax_prices TEXT,
     image LONGTEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
