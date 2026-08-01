@@ -200,29 +200,31 @@ const Reports = () => {
 
       {/* Print Preview Modal */}
       {showPrintModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col border dark:border-slate-800">
-            <div className="p-6 border-b dark:border-slate-800 flex items-center justify-between bg-slate-800 text-white">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-2 md:p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden flex flex-col border dark:border-slate-800">
+            <div className="p-4 md:p-6 border-b dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between bg-slate-800 text-white gap-4">
               <div className="flex items-center gap-3">
-                <FileText className="w-6 h-6 text-gold" />
+                <FileText className="w-5 h-5 md:w-6 md:h-6 text-gold" />
                 <div>
-                  <h3 className="text-lg font-bold">Daily Sales Report Preview</h3>
-                  <p className="text-xs text-slate-300">Generate formal report for {reportDate}</p>
+                  <h3 className="text-base md:text-lg font-bold leading-tight">Daily Sales Report Preview</h3>
+                  <p className="text-[10px] md:text-xs text-slate-300">Generate formal report for {reportDate}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-between sm:justify-end gap-2 md:gap-4">
                 <input
                   type="date"
                   value={reportDate}
                   onChange={(e) => setReportDate(e.target.value)}
-                  className="bg-slate-700 text-white border-none rounded-lg px-3 py-1 text-sm outline-none focus:ring-1 focus:ring-gold"
+                  className="bg-slate-700 text-white border-none rounded-lg px-2 md:px-3 py-1 text-xs md:text-sm outline-none focus:ring-1 focus:ring-gold"
                 />
-                <button onClick={() => setShowPrintModal(false)}><X className="w-6 h-6" /></button>
+                <button onClick={() => setShowPrintModal(false)} className="p-1 hover:bg-slate-700 rounded-lg transition-colors">
+                  <X className="w-5 h-5 md:w-6 md:h-6" />
+                </button>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-8 bg-slate-100 dark:bg-slate-950">
-              <div className="shadow-2xl shadow-black/20">
+            <div className="flex-1 overflow-auto p-2 sm:p-4 md:p-8 bg-slate-100 dark:bg-slate-950">
+              <div className="shadow-2xl shadow-black/20 mx-auto w-fit max-w-full">
                 <DailySalesReport
                   date={new Date(reportDate)}
                   transactions={transactions}
@@ -230,9 +232,9 @@ const Reports = () => {
               </div>
             </div>
 
-            <div className="p-6 border-t dark:border-slate-800 bg-white dark:bg-slate-900 flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setShowPrintModal(false)} className="rounded-xl px-8 dark:border-slate-700 dark:text-slate-300">Cancel</Button>
-              <Button onClick={handlePrint} className="rounded-xl px-8 gap-2 bg-primary">
+            <div className="p-4 md:p-6 border-t dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col sm:flex-row justify-end gap-3">
+              <Button variant="outline" onClick={() => setShowPrintModal(false)} className="rounded-xl px-8 dark:border-slate-700 dark:text-slate-300 w-full sm:w-auto order-2 sm:order-1">Cancel</Button>
+              <Button onClick={handlePrint} className="rounded-xl px-8 gap-2 bg-primary w-full sm:w-auto order-1 sm:order-2">
                 <Printer className="w-4 h-4" /> Print Report
               </Button>
             </div>
